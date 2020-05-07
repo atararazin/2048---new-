@@ -4,33 +4,33 @@ import './index.css';
 import Game from './Components/Game';
 
 
-class App extends Component {
+class App extends Component{
   constructor(props){
     super(props);
     this.state = {
-      move: '',
+      key: '',
     }
+    this.keyDownTextField = this.keyDownTextField.bind(this);
+    document.addEventListener("keydown", this.keyDownTextField, false)
   }
-  render(){
-    return <Game value={this.state.move}/>
-  }
-}
 
-ReactDOM.render(<App />, document.getElementById("root"), document.addEventListener("keydown", keyDownTextField, false));
-/*
-let move = 'initial';
-  ReactDOM.render(
-    <Game value={move}/>,
-    document.getElementById('root'),
-    document.addEventListener("keydown", keyDownTextField, false)
-   
-  );
-*/
-  function keyDownTextField(e) {
+
+  keyDownTextField(e) {
     const keys = ['ArrowLeft', 'ArrowRight','ArrowUp','ArrowDown']; 
     if(keys.includes(e.key)){
-      alert("pass to child");
-      //this.state.move = e.key
+      this.setState({
+        key: e.key
+      })
       }
     }
+ 
+  render(){
+    return <Game value={this.state.key}/>
+  }
+
+}
+
+ReactDOM.render(<App/>, document.getElementById("root"));
+
+
   

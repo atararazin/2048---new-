@@ -5,33 +5,30 @@ class Board extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        values: Array.from(Array(4), () => [null,null,null,null])
-
+        board: this.props.value
       }
     }
+
+    renderRow(i) {
+      const sqaures = []
+      for(let j = 0; j < 4; j++){
+        sqaures.push(<Square value={this.state.board[i][j]} key={(i,j)}/>)
+      }
+      return (
+        <div className="board-row">
+          {sqaures}
+        </div>
+      )
+    }
+  
     render() {
-        return(
-          <div>
-            {this.createBoard()}
-          </div>
-        )
-        
-    }
-
-    createBoard() {
-        let pos_x=100, pos_y=100
-        let sqs = []
-    
-        for (let i = 0; i < 4; i++) {
-          for (let j = 0; j < 4; j++) {
-            sqs.push(<Square x={pos_x} y={pos_y} value={i} key={[i,j]}/>)
-            pos_y += 100
-          }
-          pos_y = 100
-          pos_x += 100
-        }
-        return sqs
-      }
-  }
-
-  export default Board;
+      return (
+        <div>
+          {this.renderRow(0)}
+          {this.renderRow(1)}
+          {this.renderRow(2)}
+          {this.renderRow(3)}
+        </div>
+      )};
+}
+export default Board;

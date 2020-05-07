@@ -1,12 +1,11 @@
-import React from 'react';
-import { Rectangle } from 'draw-shape-reactjs';
+import React, { Component } from 'react';
 
-
-class Square extends React.Component {
+class Square extends Component {
     render() {
-      return (
-        <Rectangle corner={[this.props.x, this.props.y]} height={100} width={100} key={[this.props.x, this.props.y]}>
-        </Rectangle>
+      return (  
+          <button className="square">
+              {this.props.value}
+          </button> 
       )
     }
   }
