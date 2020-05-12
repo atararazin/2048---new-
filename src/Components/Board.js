@@ -1,5 +1,6 @@
 import React from 'react';
-import Square from './Sqaure';
+import '../styles/flexStyle.css'
+import colorsArray from '../util/Colors'
 
 class Board extends React.Component {
     constructor(props){
@@ -9,26 +10,43 @@ class Board extends React.Component {
       }
     }
 
+    
+    componentDidUpdate(prevProps){
+      if(this.props !== prevProps){
+        console.log("changed value of the board");
+        this.setState({
+          board: this.props.value
+        })
+
+      }
+    }
+
+    renderBoard(){
+      const board = []
+      for(let i = 0; i < 4; i++){
+        board.push(this.renderRow(i));
+      }
+      return board;
+    }
+
     renderRow(i) {
       const sqaures = []
       for(let j = 0; j < 4; j++){
-        sqaures.push(<Square value={this.state.board[i][j]} key={(i,j)}/>)
+      sqaures.push(<li class="flex-item" style={{backgroundColor: colorsArray[this.state.board[i][j]]}}>{this.state.board[i][j]}</li>);
       }
       return (
-        <div className="board-row">
+        <ul className="flex-container">
           {sqaures}
-        </div>
+        </ul>
       )
     }
   
-    render() {
+      render() {
       return (
         <div>
-          {this.renderRow(0)}
-          {this.renderRow(1)}
-          {this.renderRow(2)}
-          {this.renderRow(3)}
+          {this.renderBoard()}
         </div>
+        
       )};
 }
 export default Board;
