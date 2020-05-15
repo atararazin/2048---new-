@@ -10,7 +10,11 @@ The second was React's "Intro to React" tutorial - https://reactjs.org/tutorial/
 ![Demo](/gif/2048-Google-Chrome-2020-05-15-15.gif)
 
 ### Run Project Locally
+#### Prerequisites
+Make sure you have npm installed. If you don't head over to https://www.npmjs.com/get-npm
+#### Clone Repository
 Clone this repository by running `git clone https://github.com/atararazin/2048-new.git`
+#### Run
 Change into the directory you just cloned.
 Run `npm start`
 
