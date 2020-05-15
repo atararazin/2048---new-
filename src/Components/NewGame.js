@@ -1,8 +1,8 @@
 import React from 'react';
+require('../styles/buttonStyles.css');
 
 export default function NewGame(props){
         return(
-            <button onClick={props.onClick}>New Game</button>
+           <a href="#" class="myButton" onClick={props.onClick}>New Game</a>
         )
 }
-

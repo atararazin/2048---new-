@@ -6,7 +6,7 @@ The second was React's "Intro to React" tutorial - https://reactjs.org/tutorial/
 
 
 ### Demo
-![Demo](/2048-Google-Chrome-2020-05-15-15.gif)
+![Demo](/gif/2048-Google-Chrome-2020-05-15-15.gif)
 
 
 

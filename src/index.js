@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import Game from './Components/Game';
+
+require('./index.css');
 
 
 class App extends Component{
