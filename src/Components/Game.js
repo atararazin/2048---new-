@@ -1,51 +1,49 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Board from './Board';
 import newMove from '../move';
 import NewGame from './NewGame';
+import Undo from './Undo';
 
-class Game extends React.Component {
-    state = {
-      values: Array.from(Array(4), () => [null,null,null,null]),
+class Game extends Component {
+   constructor(props){
+     super(props);
+     this.state = {
+      values: [[null, null, null, null],
+               [null, null, null, null],
+               [null, null, null, null],
+               [null, null, null, null]],
+      prevValues: [[null, null, null, null],
+                   [null, null, null, null],
+                   [null, null, null, null],
+                   [null, null, null, null]],
       move: this.props.value,
+      
     }  
-
+    this.addTwo = this.addTwo.bind(this);
+    this.handleNewGame = this.handleNewGame.bind(this);
+    this.handleUndo = this.handleUndo.bind(this);
+   }  
+  
     componentDidMount(){
       this.addTwo();
-    }
-    
-
-    didWin(){
-      if(this.state.values.some(row => row.includes(2048))){
-        alert("Congradulations! You Won!")
-      }
-    }
-
-    //just checks if board is full
-    didLose(){
-      if(!this.state.values.some(row => row.includes(null))){
-          alert("Game Over!")
-      }
-    }
-
-    addTwo(){
-      const rand = () => Math.floor(Math.random() * 4);
-
-      const vals = this.state.values.slice();
-      let row, col;
-      while(vals[row = rand()][col = rand()]);
-      vals[row][col] = 2;
-      
-      this.setState({
-        values: vals,
-      })
     }
 
     componentDidUpdate(prevProps){
       if(this.props !== prevProps)
       {
+        const prev= [];
+        this.state.values.slice().forEach(element => {
+          prev.push(element.slice())
+        });
+
+        this.setState({
+          prevValues: prev,
+        })
+        
         const ret = newMove(this.state.values, this.props.value); 
 
-        //why isnt this code necessary in order for it to work?
+
+        //why is this code necessary in order for it to work?
         let trying = this.state.values.slice();
         for(let i = 0; i< 4;i++){
           for(let j = 0; j< 4;j++){
@@ -56,42 +54,77 @@ class Game extends React.Component {
         }
 
 
-
         const final = [...this.state.values, ...ret]
       
-
         this.setState({
           values: final,
         })
-        this.didWin();
-        this.addTwo() ;    
+        this.addTwo();   
+        this.didWin(); 
       }
     }
 
-    handleNewGame(){
-      console.log("Ere")
-      debugger;
-      const vals = this.state.values.slice();
-      vals = Array.from(Array(4), () => [null,null,null,null]);
-        this.setState({
-          values: vals,
-        })
-    }
-
     render() {
-      console.log('in render');
-     
       return (
-        <div className="game">
-          <div className="game-board" >
+          <div>
+          <div>
             <Board value={this.state.values}></Board>
           </div>
-          <div>
+          <div className="buttons">
             <NewGame onClick={this.handleNewGame}/>
+            <Undo onClick={this.handleUndo}/>
           </div>
-        </div>
+         </div>
       );
     }
+
+    
+
+    didWin(){
+      if(this.state.values.some(row => row.includes(2048))){
+        alert("congratulations! You Won!")
+      }
+    }
+
+    //just checks if board is full
+    didLose(){
+      if(!this.state.values.some(row => row.includes(null))){
+          alert("Game Over!")
+      }
+      //now check if there are any numbers that can be merged
+    }
+
+    addTwo(){
+      const rand = () => Math.floor(Math.random() * 4);
+      const vals = this.state.values.slice();
+      let row, col;
+      while(vals[row = rand()][col = rand()]);
+      vals[row][col] = 2;
+      this.setState({
+        values: vals,
+      })
+    }
+
+    
+    handleNewGame(){
+      let vals = Array.from(Array(4), () => [null,null,null,null]);
+      this.setState({
+        values: vals,
+      })
+    }
+
+    handleUndo(){
+      const prev = [];
+      this.state.prevValues.slice().forEach(element => {
+          prev.push(element.slice())
+        });
+        
+      this.setState({
+        values: prev,
+      })
+    }
+
+    
 }
 
 
